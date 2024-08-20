@@ -17,6 +17,7 @@ Imports:
     GenomicRanges,
     Gviz,
     org.Hs.eg.db,
+    R6,
     testthat,
     TxDb.Hsapiens.UCSC.hg38.knownGene,
     TxDb.Hsapiens.UCSC.hg38.refGene
