@@ -1,52 +1,55 @@
-library(R6)
-library(Gviz)
-library(GenomicRanges)
-library(BSgenome.Hsapiens.UCSC.hg38)
-library(TxDb.Hsapiens.UCSC.hg38.knownGene)
-library(TxDb.Hsapiens.UCSC.hg38.refGene)
-library(org.Hs.eg.db)
-
 #' RegionPlot R6 Class
 #'
-#' This class creates a genomic region plot using various tracks from the Gviz package.
+#' The `RegionPlot` class provides functionality for creating and visualizing a genomic region plot using various tracks from the Gviz package. This class is particularly useful for visualizing specific regions of the human genome (hg38).
 #'
-#' @section Public Methods:
-#' \describe{
-#'   \item{\code{new(bgFile, chr, from, to)}}{Initialize the RegionPlot object.}
-#'   \item{\code{createTracks()}}{Create the necessary tracks for visualization.}
-#'   \item{\code{plot(output_file = "~/Downloads/regionPlot.pdf")}}{Plot the tracks to a PDF file.}
-#' }
-#'
-#' @section Parameters:
-#' \describe{
-#'   \item{\code{bgFile}}{The path to the background file.}
-#'   \item{\code{chr}}{Chromosome name.}
-#'   \item{\code{from}}{Start position of the region.}
-#'   \item{\code{to}}{End position of the region.}
-#' }
+#' @importFrom R6 R6Class
+#' @importFrom Gviz AlignmentsTrack
+#' @importFrom Gviz SequenceTrack
+#' @importFrom Gviz IdeogramTrack
+#' @importFrom Gviz GenomeAxisTrack
+#' @importFrom Gviz GeneRegionTrack
+#' @importFrom Gviz plotTracks
+#' @importFrom BSgenome.Hsapiens.UCSC.hg38 Hsapiens
+#' @importFrom TxDb.Hsapiens.UCSC.hg38.knownGene TxDb.Hsapiens.UCSC.hg38.knownGene
+#' @importFrom TxDb.Hsapiens.UCSC.hg38.refGene TxDb.Hsapiens.UCSC.hg38.refGene
+#' @importFrom GenomicRanges mcols
 #'
 #' @examples
 #' \dontrun{
-#' plotter <- RegionPlot$new("path_to_my_file", "chr17", 7673300, 7675000)
-#' plotter$plot()
+#' plotter <- RegionPlot$new("path_to_my_file.bam", "chr17", 7673300, 7675000)
+#' plotter$plot(output_file = "regionPlot.pdf")
 #' }
+#'
+#' @name RegionPlot
 
 RegionPlot <- R6Class("RegionPlot",
                       public = list(
+                        #' @field bgFile The path to the background file.
                         bgFile = NULL,
+                        #' @field chr Chromosome name.
                         chr = NULL,
+                        #' @field from Start position of the region.
                         from = NULL,
+                        #' @field to End position of the region.
                         to = NULL,
+                        #' @field alignmentsTrack AlignmentsTrack object.
                         alignmentsTrack = NULL,
+                        #' @field seqTrack SequenceTrack object.
                         seqTrack = NULL,
+                        #' @field ideoTrack IdeogramTrack object.
                         ideoTrack = NULL,
+                        #' @field axisTrack GenomeAxisTrack object.
                         axisTrack = NULL,
+                        #' @field geneTrack GeneRegionTrack object.
                         geneTrack = NULL,
+                        #' @field txTrack GeneRegionTrack object for knownGene.
                         txTrack = NULL,
+                        #' @field txTrackRef GeneRegionTrack object for refGene.
                         txTrackRef = NULL,
-
                         #' Initialize the RegionPlot object
-                        #'
+                        #' @description
+                        #' This method initializes the RegionPlot object with the
+                        #' specified background file, chromosome, and genomic region.
                         #' @param bgFile The path to the background file.
                         #' @param chr Chromosome name.
                         #' @param from Start position of the region.
@@ -60,6 +63,11 @@ RegionPlot <- R6Class("RegionPlot",
                         },
 
                         #' Create the necessary tracks for visualization
+                        #' @description
+                        #' This method creates the AlignmentsTrack, SequenceTrack,
+                        #' IdeogramTrack, GenomeAxisTrack, GeneRegionTrack, and
+                        #' GeneRegionTrack objects for visualization.
+                        #' @return NULL
                         createTracks = function() {
                           # Create AlignmentsTrack
                           self$alignmentsTrack <- AlignmentsTrack(
@@ -142,7 +150,8 @@ RegionPlot <- R6Class("RegionPlot",
                         },
 
                         #' Plot the tracks to a PDF file
-                        #'
+                        #' @description
+                        #' This method plots the tracks to a PDF file for visualization.
                         #' @param output_file The path to the output PDF file. Default is "~/Downloads/regionPlot.pdf".
                         plot = function(output_file = "~/Downloads/regionPlot.pdf") {
                           pdf(output_file, width = 20, height = 10)
@@ -166,7 +175,3 @@ RegionPlot <- R6Class("RegionPlot",
                         }
                       )
 )
-
-# Example usage:
-# plotter <- RegionPlot$new("path_to_my_file", "chr17", 7673300, 7675000)
-# plotter$plot()
