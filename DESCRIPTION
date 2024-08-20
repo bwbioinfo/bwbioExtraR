@@ -1,0 +1,14 @@
+Package: bwbioExtraR
+Type: Package
+Title: bwbioExtraR Functions
+Version: 0.1.0
+Author: bwbio
+Maintainer: The package maintainer <yourself@somewhere.net>
+Description: A container package to house useful extra functions or 
+    abstractions for bioinformatics applications.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
