@@ -5,6 +5,7 @@ library(BSgenome.Hsapiens.UCSC.hg38)
 library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 library(TxDb.Hsapiens.UCSC.hg38.refGene)
 library(org.Hs.eg.db)
+library(R6)
 
 # Assuming RegionPlot is in your package namespace
 # Ensure this script is located in tests/testthat/ directory
@@ -23,7 +24,8 @@ test_that("RegionPlot initializes correctly", {
       7675000
       )
 
-  expect_is(plotter, "RegionPlot")
+  expect_true(is.R6(plotter))
+  expect_true(inherits(plotter, "RegionPlot"))
   expect_equal(plotter$chr, "chr17")
   expect_equal(plotter$from, 7673300)
   expect_equal(plotter$to, 7675000)
@@ -41,13 +43,13 @@ test_that("createTracks method creates tracks correctly", {
     7673300, 7675000)
   plotter$createTracks()
 
-  expect_is(plotter$alignmentsTrack, "AlignmentsTrack")
-  expect_is(plotter$seqTrack, "SequenceTrack")
-  expect_is(plotter$ideoTrack, "IdeogramTrack")
-  expect_is(plotter$axisTrack, "GenomeAxisTrack")
-  expect_is(plotter$geneTrack, "GeneRegionTrack")
-  expect_is(plotter$txTrack, "GeneRegionTrack")
-  expect_is(plotter$txTrackRef, "GeneRegionTrack")
+  expect_s4_class(plotter$alignmentsTrack, "AlignmentsTrack")
+  expect_s4_class(plotter$seqTrack, "SequenceTrack")
+  expect_s4_class(plotter$ideoTrack, "IdeogramTrack")
+  expect_s4_class(plotter$axisTrack, "GenomeAxisTrack")
+  expect_s4_class(plotter$geneTrack, "GeneRegionTrack")
+  expect_s4_class(plotter$txTrack, "GeneRegionTrack")
+  expect_s4_class(plotter$txTrackRef, "GeneRegionTrack")
 })
 
 # Test Plot Method
