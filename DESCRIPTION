@@ -11,7 +11,7 @@ Encoding: UTF-8
 LazyData: true
 Config/testthat/edition: 3
 RoxygenNote: 7.3.2.9000
-biocViews:
+biocViews: Annotation, DataImport, Genetics, Genome, Sequencing, Software
 Imports: 
     BSgenome.Hsapiens.UCSC.hg38,
     GenomicRanges,
@@ -19,3 +19,9 @@ Imports:
     R6,
     TxDb.Hsapiens.UCSC.hg38.knownGene,
     TxDb.Hsapiens.UCSC.hg38.refGene
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat,
+    org.Hs.eg.db
+VignetteBuilder: knitr
